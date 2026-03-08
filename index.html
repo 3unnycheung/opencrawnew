@@ -1,0 +1,1747 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>开麒智爪 Opencraw - 国产边缘智能底座</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Noto+Serif+SC:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a0a0a;
+      --bg-elevated: #111111;
+      --bg-card: #161616;
+      --text: #f5f5f5;
+      --text-muted: #888888;
+      --text-dim: #555555;
+      --accent: #dc2626;
+      --accent-dark: #991b1b;
+      --border: #2a2a2a;
+      --border-heavy: #333333;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Space Grotesk', 'Noto Serif SC', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* Typography */
+    .heading-xl {
+      font-size: clamp(3rem, 8vw, 7rem);
+      font-weight: 700;
+      line-height: 0.9;
+      letter-spacing: -0.03em;
+      text-transform: uppercase;
+    }
+
+    .heading-lg {
+      font-size: clamp(2rem, 5vw, 4rem);
+      font-weight: 600;
+      line-height: 1;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+    }
+
+    .heading-md {
+      font-size: clamp(1.5rem, 3vw, 2.5rem);
+      font-weight: 600;
+      line-height: 1.1;
+      letter-spacing: -0.01em;
+    }
+
+    .body-text {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 1.125rem;
+      line-height: 1.8;
+      color: var(--text-muted);
+    }
+
+    .body-text-sm {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 1rem;
+      line-height: 1.7;
+      color: var(--text-muted);
+    }
+
+    .label {
+      font-size: 0.6875rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--text-dim);
+    }
+
+    /* Components */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 1rem 2rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      border: 2px solid var(--border-heavy);
+      background: transparent;
+      color: var(--text);
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: transparent;
+      color: var(--accent);
+    }
+
+    .card {
+      background: var(--bg-elevated);
+      border: 2px solid var(--border);
+      padding: 2rem;
+    }
+
+    .marker {
+      display: inline-block;
+      width: 0.5rem;
+      height: 0.5rem;
+      background: var(--accent);
+    }
+
+    .divider-accent {
+      width: 3rem;
+      height: 2px;
+      background: var(--accent);
+    }
+
+    /* Layout */
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    /* Navigation */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: rgba(10, 10, 10, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 5rem;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      text-decoration: none;
+    }
+
+    .logo-img {
+      width: 3rem;
+      height: 3rem;
+      object-fit: cover;
+      border: 2px solid var(--accent);
+    }
+
+    .logo-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .logo-name {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--text);
+      letter-spacing: 0.05em;
+    }
+
+    .logo-sub {
+      font-size: 0.625rem;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+    }
+
+    .nav-link {
+      font-size: 0.6875rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-link:hover {
+      color: var(--accent);
+    }
+
+    .mobile-menu-btn {
+      display: none;
+      width: 3rem;
+      height: 3rem;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text);
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 5rem;
+        left: 0;
+        right: 0;
+        background: var(--bg);
+        border-bottom: 1px solid var(--border);
+        padding: 2rem;
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+
+      .nav-links.active {
+        display: flex;
+      }
+
+      .mobile-menu-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+
+    /* Hero Section */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding-top: 5rem;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+
+    .hero-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.2;
+    }
+
+    .hero-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, var(--bg) 0%, var(--bg) 50%, transparent 100%);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+      padding: 4rem 0;
+    }
+
+    .hero-label {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .hero-title {
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-subtitle {
+      font-size: 1.5rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+    }
+
+    .hero-desc {
+      margin-bottom: 2.5rem;
+      max-width: 600px;
+    }
+
+    .hero-desc p + p {
+      margin-top: 1rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 4rem;
+    }
+
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+    }
+
+    .hero-tag {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .hero-visual {
+      position: relative;
+    }
+
+    .hero-image-frame {
+      position: relative;
+      border: 2px solid var(--border);
+      padding: 0.75rem;
+    }
+
+    .hero-image-frame::before,
+    .hero-image-frame::after {
+      content: '';
+      position: absolute;
+      width: 1rem;
+      height: 1rem;
+      border-color: var(--accent);
+      border-style: solid;
+    }
+
+    .hero-image-frame::before {
+      top: -2px;
+      left: -2px;
+      border-width: 2px 0 0 2px;
+    }
+
+    .hero-image-frame::after {
+      bottom: -2px;
+      right: -2px;
+      border-width: 0 2px 2px 0;
+    }
+
+    .hero-image-frame img {
+      width: 100%;
+      aspect-ratio: 1;
+      object-fit: cover;
+    }
+
+    .hero-stat {
+      position: absolute;
+      background: var(--bg-elevated);
+      border: 2px solid var(--border);
+      padding: 1.25rem;
+      min-width: 140px;
+    }
+
+    .hero-stat-1 {
+      bottom: -1.5rem;
+      left: -1.5rem;
+    }
+
+    .hero-stat-2 {
+      top: -1.5rem;
+      right: -1.5rem;
+    }
+
+    .hero-stat-value {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .hero-tech-tags {
+      margin-top: 3rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .hero-tech-tag {
+      padding: 0.5rem 1rem;
+      border: 1px solid var(--border);
+      font-size: 0.625rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--text-dim);
+    }
+
+    @media (max-width: 1024px) {
+      .hero-content {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-visual {
+        display: none;
+      }
+    }
+
+    /* Section Base */
+    .section {
+      position: relative;
+      padding: 8rem 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .section-header {
+      margin-bottom: 4rem;
+    }
+
+    .section-label {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .section-title {
+      margin-bottom: 1rem;
+    }
+
+    .section-desc {
+      max-width: 600px;
+    }
+
+    /* Vision Section */
+    .vision-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.5fr;
+      gap: 5rem;
+    }
+
+    .vision-left {
+      position: sticky;
+      top: 8rem;
+      height: fit-content;
+    }
+
+    .vision-pillars {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .pillar-card {
+      background: var(--bg-elevated);
+      border: 2px solid var(--border);
+      padding: 2rem;
+      transition: all 0.3s ease;
+    }
+
+    .pillar-card:hover {
+      border-color: var(--accent);
+    }
+
+    .pillar-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .pillar-num {
+      font-size: 3rem;
+      font-weight: 700;
+      color: var(--border-heavy);
+      line-height: 1;
+    }
+
+    .pillar-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .pillar-content {
+      margin-bottom: 1.5rem;
+    }
+
+    .pillar-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .pillar-tag {
+      padding: 0.375rem 0.75rem;
+      border: 1px solid var(--border);
+      font-size: 0.625rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+    }
+
+    @media (max-width: 1024px) {
+      .vision-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .vision-left {
+        position: static;
+      }
+    }
+
+    /* Architecture Section */
+    .arch-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 3rem;
+    }
+
+    .arch-layers {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .arch-layer {
+      border: 2px solid var(--border);
+      padding: 1.5rem;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .arch-layer::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background: var(--accent);
+      transform: scaleY(0);
+      transition: transform 0.3s ease;
+    }
+
+    .arch-layer:hover::before {
+      transform: scaleY(1);
+    }
+
+    .arch-layer:hover {
+      border-color: var(--border-heavy);
+      background: var(--bg-card);
+    }
+
+    .arch-layer-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .arch-layer-icon {
+      width: 3rem;
+      height: 3rem;
+      border: 2px solid var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      color: var(--accent);
+    }
+
+    .arch-layer-title {
+      font-size: 1.125rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .arch-layer-items {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+    }
+
+    .arch-layer-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+    }
+
+    .arch-layer-item::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      background: var(--accent);
+      margin-top: 0.5rem;
+      flex-shrink: 0;
+    }
+
+    .arch-layer-item-name {
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
+
+    .arch-layer-item-desc {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      margin-top: 0.25rem;
+    }
+
+    .arch-specs {
+      border: 2px solid var(--border);
+      padding: 2rem;
+      position: sticky;
+      top: 8rem;
+      height: fit-content;
+    }
+
+    .arch-specs-title {
+      font-size: 1rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 1.5rem;
+    }
+
+    .arch-spec {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .arch-spec:last-child {
+      border-bottom: none;
+    }
+
+    .arch-spec-label {
+      font-size: 0.6875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-dim);
+    }
+
+    .arch-spec-value {
+      font-size: 0.875rem;
+      font-family: monospace;
+    }
+
+    .arch-spec-value.highlight {
+      color: var(--accent);
+    }
+
+    .arch-specs-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-top: 2rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .arch-specs-stat {
+      text-align: center;
+    }
+
+    .arch-specs-stat-value {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .arch-specs-stat-label {
+      font-size: 0.625rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-dim);
+      margin-top: 0.25rem;
+    }
+
+    @media (max-width: 1024px) {
+      .arch-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .arch-specs {
+        position: static;
+      }
+
+      .arch-layer-items {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Scenes Section */
+    .scenes-grid {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 3rem;
+    }
+
+    .scenes-tabs {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .scene-tab {
+      border: 2px solid var(--border);
+      padding: 1.5rem;
+      text-align: left;
+      background: transparent;
+      color: var(--text);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .scene-tab:hover,
+    .scene-tab.active {
+      border-color: var(--accent);
+      background: rgba(220, 38, 38, 0.05);
+    }
+
+    .scene-tab-title {
+      font-size: 1.125rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.25rem;
+    }
+
+    .scene-tab-subtitle {
+      font-size: 0.6875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--text-dim);
+    }
+
+    .scene-content {
+      border: 2px solid var(--border);
+      overflow: hidden;
+    }
+
+    .scene-image {
+      position: relative;
+      aspect-ratio: 16/9;
+    }
+
+    .scene-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .scene-image::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, var(--bg) 0%, transparent 50%);
+    }
+
+    .scene-badge {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      padding: 0.5rem 1rem;
+      border: 1px solid var(--accent);
+      font-size: 0.625rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--accent);
+      z-index: 1;
+    }
+
+    .scene-info {
+      padding: 2rem;
+    }
+
+    .scene-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 1rem;
+    }
+
+    .scene-desc {
+      margin-bottom: 1.5rem;
+    }
+
+    .scene-features {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .scene-feature {
+      padding: 0.5rem 1rem;
+      border: 1px solid var(--border);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .scene-stats {
+      display: flex;
+      gap: 3rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .scene-stat-value {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .scene-stat-label {
+      font-size: 0.625rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-dim);
+      margin-top: 0.25rem;
+    }
+
+    @media (max-width: 1024px) {
+      .scenes-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* CTA Section */
+    .cta {
+      position: relative;
+      padding: 8rem 0;
+      text-align: center;
+      border-top: 1px solid var(--border);
+      overflow: hidden;
+    }
+
+    .cta-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+
+    .cta-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.05;
+    }
+
+    .cta-content {
+      position: relative;
+      z-index: 1;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .cta-label {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .cta-title {
+      margin-bottom: 1.5rem;
+    }
+
+    .cta-desc {
+      margin-bottom: 3rem;
+    }
+
+    .cta-form {
+      display: flex;
+      gap: 1rem;
+      max-width: 500px;
+      margin: 0 auto 4rem;
+    }
+
+    .cta-input {
+      flex: 1;
+      padding: 1rem 1.5rem;
+      border: 2px solid var(--border);
+      background: transparent;
+      color: var(--text);
+      font-size: 0.875rem;
+    }
+
+    .cta-input::placeholder {
+      color: var(--text-dim);
+    }
+
+    .cta-input:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+
+    .cta-success {
+      border: 2px solid #22c55e;
+      padding: 2rem;
+      max-width: 500px;
+      margin: 0 auto 4rem;
+    }
+
+    .cta-success-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #22c55e;
+      margin-bottom: 0.5rem;
+    }
+
+    .cta-footer {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+    }
+
+    @media (max-width: 640px) {
+      .cta-form {
+        flex-direction: column;
+      }
+    }
+
+    /* Footer */
+    .footer {
+      border-top: 2px solid var(--border);
+      padding: 4rem 0 2rem;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr repeat(3, 1fr);
+      gap: 4rem;
+      margin-bottom: 4rem;
+    }
+
+    .footer-brand {
+      max-width: 300px;
+    }
+
+    .footer-logo {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      text-decoration: none;
+    }
+
+    .footer-logo-img {
+      width: 2.5rem;
+      height: 2.5rem;
+      object-fit: cover;
+      border: 2px solid var(--accent);
+    }
+
+    .footer-logo-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .footer-logo-name {
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .footer-logo-sub {
+      font-size: 0.625rem;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+    }
+
+    .footer-desc {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    .footer-title {
+      font-size: 0.6875rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .footer-link {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-link:hover {
+      color: var(--accent);
+    }
+
+    .footer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .footer-copyright {
+      font-size: 0.6875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-dim);
+    }
+
+    .footer-legal {
+      display: flex;
+      gap: 2rem;
+    }
+
+    @media (max-width: 1024px) {
+      .footer-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 640px) {
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-bottom {
+        flex-direction: column;
+        gap: 1rem;
+      }
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .animate-in {
+      animation: fadeInUp 0.8s ease forwards;
+    }
+
+    .delay-1 { animation-delay: 0.1s; }
+    .delay-2 { animation-delay: 0.2s; }
+    .delay-3 { animation-delay: 0.3s; }
+    .delay-4 { animation-delay: 0.4s; }
+    .delay-5 { animation-delay: 0.5s; }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="nav">
+    <div class="container">
+      <div class="nav-inner">
+        <a href="index.html" class="logo">
+          <img src="images/logo-crow.jpg" alt="开麒智爪" class="logo-img">
+          <div class="logo-text">
+            <span class="logo-name">开麒智爪</span>
+            <span class="logo-sub">Opencraw</span>
+          </div>
+        </a>
+        <div class="nav-links" id="navLinks">
+          <a href="product.html" class="nav-link">产品</a>
+          <a href="solutions.html" class="nav-link">解决方案</a>
+          <a href="specs.html" class="nav-link">技术规格</a>
+          <a href="about.html" class="nav-link">关于</a>
+          <a href="contact.html" class="btn btn-primary">预约体验</a>
+        </div>
+        <button class="mobile-menu-btn" onclick="toggleMenu()">≡</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-bg">
+      <img src="images/circuit-board.jpg" alt="Background">
+    </div>
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-left">
+          <div class="hero-label animate-in">
+            <div class="marker"></div>
+            <span class="label">工程样机研发中 · 预计2026年Q2量产</span>
+          </div>
+          <h1 class="heading-xl hero-title animate-in delay-1">
+            开麒智爪
+          </h1>
+          <p class="hero-subtitle animate-in delay-2">国产边缘智能底座</p>
+          <div class="hero-desc animate-in delay-3">
+            <p class="body-text">
+              在 AI Agent 席卷全球的时代，我们选择了一条更难但正确的路：从底层重构，打造真正自主可控的本地化 AI 中枢。
+            </p>
+            <p class="body-text">
+              开麒智爪基于开放麒麟 openKylin——中国首个桌面操作系统根社区，结合 Nanabot 边缘智能框架，构建了从芯片指令集到 AI 推理引擎的完整国产技术栈。这不是简单的"替代方案"，而是原生的、为分布式边缘计算而生的新一代智能底座。
+            </p>
+          </div>
+          <div class="hero-actions animate-in delay-4">
+            <a href="product.html" class="btn btn-primary">探索产品 →</a>
+            <a href="contact.html" class="btn">预约体验</a>
+          </div>
+          <div class="hero-tags animate-in delay-5">
+            <div class="hero-tag">
+              <div class="marker"></div>
+              <span class="label">安全可控</span>
+            </div>
+            <div class="hero-tag">
+              <div class="marker"></div>
+              <span class="label">本地部署</span>
+            </div>
+            <div class="hero-tag">
+              <div class="marker"></div>
+              <span class="label">数据主权</span>
+            </div>
+            <div class="hero-tag">
+              <div class="marker"></div>
+              <span class="label">国产闭环</span>
+            </div>
+          </div>
+        </div>
+        <div class="hero-visual">
+          <div class="hero-image-frame animate-in delay-3">
+            <img src="images/processor.jpg" alt="AI Processor">
+          </div>
+          <div class="hero-stat hero-stat-1">
+            <div class="label">典型功耗</div>
+            <div class="hero-stat-value">5-12W</div>
+          </div>
+          <div class="hero-stat hero-stat-2">
+            <div class="label">起售价</div>
+            <div class="hero-stat-value">¥800</div>
+          </div>
+          <div class="hero-tech-tags">
+            <span class="hero-tech-tag">openKylin</span>
+            <span class="hero-tech-tag">Nanabot</span>
+            <span class="hero-tech-tag">Qwen3.5</span>
+            <span class="hero-tech-tag">ARM64</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Vision Section -->
+  <section class="section">
+    <div class="container">
+      <div class="vision-grid">
+        <div class="vision-left">
+          <div class="section-label">
+            <div class="divider-accent"></div>
+            <span class="label">产品理念</span>
+          </div>
+          <h2 class="heading-lg section-title">
+            不是替代<br>
+            <span style="color: var(--accent);">而是原生</span>
+          </h2>
+          <div class="section-desc">
+            <p class="body-text">
+              当业界还在讨论如何"兼容"外国生态时，我们在思考：如果从一开始就为国产场景设计，会是怎样？
+            </p>
+            <p class="body-text" style="margin-top: 1rem;">
+              开麒智爪基于开放麒麟 openKylin——中国首个桌面操作系统根社区，结合 Nanabot 边缘智能框架，构建了从芯片指令集到 AI 推理引擎的完整国产技术栈。
+            </p>
+          </div>
+          <div style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border);">
+            <div class="label" style="margin-bottom: 0.5rem;">核心定位</div>
+            <p style="font-size: 1.125rem; color: var(--text-muted);">
+              原生的、为分布式边缘计算而生的新一代智能底座
+            </p>
+          </div>
+        </div>
+        <div class="vision-right">
+          <div class="vision-pillars">
+            <div class="pillar-card">
+              <div class="pillar-header">
+                <div class="pillar-num">01</div>
+                <div class="pillar-title">原生自主架构</div>
+              </div>
+              <p class="body-text-sm pillar-content">
+                底层运行纯国产 openKylin 操作系统，支持 ARM64、LoongArch、RISC-V 等国产指令集。摆脱对 Windows/macOS 的依赖，代码级透明可控，从根上消除供应链风险。预装 UKUI 4.0 桌面环境，提供熟悉的使用体验。
+              </p>
+              <div class="pillar-tags">
+                <span class="pillar-tag">根社区版</span>
+                <span class="pillar-tag">可审计</span>
+                <span class="pillar-tag">多架构支持</span>
+              </div>
+            </div>
+            <div class="pillar-card">
+              <div class="pillar-header">
+                <div class="pillar-num">02</div>
+                <div class="pillar-title">原生安全可控</div>
+              </div>
+              <p class="body-text-sm pillar-content">
+                所有 AI 推理、数据存储、任务执行均在本地完成，无需连接云端即可实现多模态交互。支持国密 SM2/SM3/SM4 算法与可信启动，满足等保 2.0 与关键基础设施合规要求，数据主权完全归属用户。
+              </p>
+              <div class="pillar-tags">
+                <span class="pillar-tag">离线运行</span>
+                <span class="pillar-tag">国密算法</span>
+                <span class="pillar-tag">等保2.0</span>
+              </div>
+            </div>
+            <div class="pillar-card">
+              <div class="pillar-header">
+                <div class="pillar-num">03</div>
+                <div class="pillar-title">原生分布式智能</div>
+              </div>
+              <p class="body-text-sm pillar-content">
+                基于 Nanabot 框架实现设备间的"软总线"互联，多个开麒智爪节点可自组网形成分布式计算集群。低功耗设计支持 POE 供电或移动电源，可无缝嵌入工业机柜、实验室或家庭环境，7×24 小时稳定运行。
+              </p>
+              <div class="pillar-tags">
+                <span class="pillar-tag">5-12W 功耗</span>
+                <span class="pillar-tag">分布式组网</span>
+                <span class="pillar-tag">POE供电</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Architecture Section -->
+  <section class="section" id="architecture">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-label">
+          <div class="divider-accent"></div>
+          <span class="label">技术架构</span>
+        </div>
+        <h2 class="heading-lg section-title">
+          全栈透明<br>
+          <span style="color: var(--text-dim);">每一层都可审计</span>
+        </h2>
+        <p class="body-text section-desc">
+          从硬件指令集到 AI 推理引擎，我们拒绝黑盒。这是真正的"原生"——不是营销词汇，而是工程现实。每一层技术栈都经过精心选择，确保国产自主、安全可控。
+        </p>
+      </div>
+      <div class="arch-grid">
+        <div class="arch-layers">
+          <div class="arch-layer">
+            <div class="arch-layer-header">
+              <div class="arch-layer-icon">◈</div>
+              <div class="arch-layer-title">应用层</div>
+            </div>
+            <div class="arch-layer-items">
+              <div class="arch-layer-item">
+                <div>
+                  <div class="arch-layer-item-name">Nanabot Edge</div>
+                  <div class="arch-layer-item-desc">香港大学研发的边缘智能框架</div>
+                </div>
+              </div>
+              <div class="arch-layer-item">
+                <div>
+                  <div class="arch-layer-item-name">本地大模型</div>
+                  <div class="arch-layer-item-desc">Qwen3.5 0.8B-4B 参数支持</div>
+                </div>
+              </div>
+              <div class="arch-layer-item">
+                <div>
+                  <div class="arch-layer-item-name">多模态处理</div>
+                  <div class="arch-layer-item-desc">文本、语音、图像本地推理</div>
+                </div>
+              </div>
+              <div class="arch-layer-item">
+                <div>
+                  <div class="arch-layer-item-name">知识库系统</div>
+                  <div class="arch-layer-item-desc">本地向量数据库，RAG 支持</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="arch-layer">
+            <div class="arch-layer-header">
+              <div class="arch-layer-icon">◉</div>
+              <div class="arch-layer-title">平台层</div>
+            </div>
+            <div class="arch-layer-items">
+              <div class="arch-layer-item">
+                <div>
+                  <div class="arch-layer-item-name">openKylin 2.0</div>
+                  <div class="arch-layer-item-desc">中国首个桌面OS根社区</div>
+                </div>
+              </div>
+              <div class="arch-layer-item">
+                <div>
+                  <div class="arch-layer-item-name">UKUI 4.0</div>
+                  <div class="arch-layer-item-desc">Qt架构桌面环境</div>
+                </div>
+              </div>
+              <div class="arch-layer-item">
+                <div>
+                  <div class="arch-layer-item-name">容器支持</div>
+                  <div class="arch-layer-item-desc">Docker / Podman</div>
+                </div>
+              </div>
+              <div class="arch-layer-item">
+                <div>
+                  <div class="arch-layer-item-name">软件仓库</div>
+                  <div class="arch-layer-item-desc">丰富的国产软件生态</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="arch-layer">
+            <div class="arch-layer-header">
+              <div class="arch-layer-icon">◆</div>
+              <div class="arch-layer-title">安全层</div>
+            </div>
+            <div class="arch-layer-items">
+              <div class="arch-layer-item">
+                <div>
+                  <div class="arch-layer-item-name">国密算法</div>
+                  <div class="arch-layer-item-desc">SM2/SM3/SM4 全支持</div>
+                </div>
+              </div>
+              <div class="arch-layer-item">
+                <div>
+                  <div class="arch-layer-item-name">可信启动</div>
+                  <div class="arch-layer-item-desc">Secure Boot 验证链</div>
+                </div>
+              </div>
+              <div class="arch-layer-item">
+                <div>
+                  <div class="arch-layer-item-name">全盘加密</div>
+                  <div class="arch-layer-item-desc">LUKS 数据加密</div>
+                </div>
+              </div>
+              <div class="arch-layer-item">
+                <div>
+                  <div class="arch-layer-item-name">访问控制</div>
+                  <div class="arch-layer-item-desc">细粒度权限管理</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="arch-layer">
+            <div class="arch-layer-header">
+              <div class="arch-layer-icon">▣</div>
+              <div class="arch-layer-title">硬件层</div>
+            </div>
+            <div class="arch-layer-items">
+              <div class="arch-layer-item">
+                <div>
+                  <div class="arch-layer-item-name">ARM64 模组</div>
+                  <div class="arch-layer-item-desc">四核 Cortex-A76 @ 2.4GHz</div>
+                </div>
+              </div>
+              <div class="arch-layer-item">
+                <div>
+                  <div class="arch-layer-item-name">极致能效</div>
+                  <div class="arch-layer-item-desc">5-12W 典型负载</div>
+                </div>
+              </div>
+              <div class="arch-layer-item">
+                <div>
+                  <div class="arch-layer-item-name">丰富接口</div>
+                  <div class="arch-layer-item-desc">双千兆网口、多USB、GPIO</div>
+                </div>
+              </div>
+              <div class="arch-layer-item">
+                <div>
+                  <div class="arch-layer-item-name">工业品质</div>
+                  <div class="arch-layer-item-desc">-20°C~60°C 工作温度</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="arch-specs">
+          <div class="arch-specs-title">技术规格</div>
+          <div class="arch-spec">
+            <span class="arch-spec-label">操作系统</span>
+            <span class="arch-spec-value">openKylin 2.0</span>
+          </div>
+          <div class="arch-spec">
+            <span class="arch-spec-label">内核</span>
+            <span class="arch-spec-value">Linux 6.1 LTS</span>
+          </div>
+          <div class="arch-spec">
+            <span class="arch-spec-label">AI 框架</span>
+            <span class="arch-spec-value">Nanabot Edge</span>
+          </div>
+          <div class="arch-spec">
+            <span class="arch-spec-label">支持模型</span>
+            <span class="arch-spec-value">Qwen3.5 0.8B-4B</span>
+          </div>
+          <div class="arch-spec">
+            <span class="arch-spec-label">处理器</span>
+            <span class="arch-spec-value">ARM64 四核</span>
+          </div>
+          <div class="arch-spec">
+            <span class="arch-spec-label">内存</span>
+            <span class="arch-spec-value">4GB / 8GB</span>
+          </div>
+          <div class="arch-spec">
+            <span class="arch-spec-label">存储</span>
+            <span class="arch-spec-value">32GB-128GB</span>
+          </div>
+          <div class="arch-spec">
+            <span class="arch-spec-label">典型功耗</span>
+            <span class="arch-spec-value highlight">5-12W</span>
+          </div>
+          <div class="arch-spec">
+            <span class="arch-spec-label">网络</span>
+            <span class="arch-spec-value">千兆以太网 × 2</span>
+          </div>
+          <div class="arch-spec">
+            <span class="arch-spec-label">供电</span>
+            <span class="arch-spec-value">POE 802.3af</span>
+          </div>
+          <div class="arch-specs-stats">
+            <div class="arch-specs-stat">
+              <div class="arch-specs-stat-value">100%</div>
+              <div class="arch-specs-stat-label">开源</div>
+            </div>
+            <div class="arch-specs-stat">
+              <div class="arch-specs-stat-value">0</div>
+              <div class="arch-specs-stat-label">云端依赖</div>
+            </div>
+            <div class="arch-specs-stat">
+              <div class="arch-specs-stat-value">国密</div>
+              <div class="arch-specs-stat-label">算法</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Scenes Section -->
+  <section class="section" id="scenes">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-label">
+          <div class="divider-accent"></div>
+          <span class="label">应用场景</span>
+        </div>
+        <h2 class="heading-lg section-title">全场景覆盖</h2>
+        <p class="body-text section-desc">
+          从实验室到工业现场，从办公室到家庭环境，开麒智爪为各种边缘智能场景提供可靠底座。
+        </p>
+      </div>
+      <div class="scenes-grid">
+        <div class="scenes-tabs">
+          <button class="scene-tab active" onclick="showScene(0)">
+            <div class="scene-tab-title">工业智能</div>
+            <div class="scene-tab-subtitle">Industrial AI</div>
+          </button>
+          <button class="scene-tab" onclick="showScene(1)">
+            <div class="scene-tab-title">科研实验</div>
+            <div class="scene-tab-subtitle">Research Lab</div>
+          </button>
+          <button class="scene-tab" onclick="showScene(2)">
+            <div class="scene-tab-title">智慧办公</div>
+            <div class="scene-tab-subtitle">Smart Office</div>
+          </button>
+          <a href="solutions.html" class="label" style="display: block; margin-top: 1.5rem; color: var(--text-muted);">
+            查看全部解决方案 →
+          </a>
+        </div>
+        <div class="scene-content" id="sceneContent">
+          <div class="scene-image">
+            <span class="scene-badge">Industrial AI</span>
+            <img src="images/server-room.jpg" alt="工业智能">
+          </div>
+          <div class="scene-info">
+            <h3 class="scene-title">工业智能</h3>
+            <p class="body-text-sm scene-desc">
+              嵌入工业机柜作为本地 AI 控制器，连接传感器与执行器，实现 7×24 小时无人值守运行。支持设备预测性维护、质量检测、工艺优化等场景。
+            </p>
+            <div class="scene-features">
+              <span class="scene-feature">设备控制与数据采集</span>
+              <span class="scene-feature">本地推理，低延迟响应</span>
+              <span class="scene-feature">POE 供电，简化布线</span>
+            </div>
+            <div class="scene-stats">
+              <div>
+                <div class="scene-stat-value">&lt;10ms</div>
+                <div class="scene-stat-label">响应延迟</div>
+              </div>
+              <div>
+                <div class="scene-stat-value">99.9%</div>
+                <div class="scene-stat-label">可用性</div>
+              </div>
+              <div>
+                <div class="scene-stat-value">7×24</div>
+                <div class="scene-stat-label">持续运行</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta">
+    <div class="cta-bg">
+      <img src="images/processor.jpg" alt="Background">
+    </div>
+    <div class="container">
+      <div class="cta-content">
+        <div class="cta-label">
+          <div class="marker"></div>
+          <span class="label">量产准备中 · 预计2026年Q2开放预约</span>
+        </div>
+        <h2 class="heading-lg cta-title">敬请期待</h2>
+        <p class="body-text cta-desc">
+          我们正在与供应链伙伴进行最后的可靠性测试。第一批工程样机即将开放预约体验，留下您的邮箱，我们将在量产开放时第一时间通知您。
+        </p>
+        <form class="cta-form" id="ctaForm" onsubmit="handleSubmit(event)">
+          <input type="email" class="cta-input" placeholder="输入您的工作邮箱" required>
+          <button type="submit" class="btn btn-primary">→</button>
+        </form>
+        <div class="cta-footer">
+          <div style="display: flex; align-items: center; gap: 0.75rem;">
+            <div style="width: 2.5rem; height: 2.5rem; border: 1px solid var(--accent); display: flex; align-items: center; justify-content: center;">
+              <span style="font-size: 0.875rem; font-weight: 600; color: var(--accent);">麒</span>
+            </div>
+            <span style="font-weight: 600;">开麒智爪 Opencraw</span>
+          </div>
+          <span style="color: var(--text-dim);">|</span>
+          <span class="label">基于 openKylin 与 Nanabot 构建</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="footer-logo">
+            <img src="images/logo-crow.jpg" alt="开麒智爪" class="footer-logo-img">
+            <div class="footer-logo-text">
+              <span class="footer-logo-name">开麒智爪</span>
+              <span class="footer-logo-sub">Opencraw</span>
+            </div>
+          </a>
+          <p class="footer-desc">
+            基于开放麒麟 openKylin 与 Nanabot 框架，打造国产边缘智能底座。
+          </p>
+        </div>
+        <div>
+          <h4 class="footer-title">产品</h4>
+          <div class="footer-links">
+            <a href="product.html#architecture" class="footer-link">核心架构</a>
+            <a href="product.html#models" class="footer-link">本地模型</a>
+            <a href="product.html#integration" class="footer-link">企业集成</a>
+            <a href="specs.html" class="footer-link">技术规格</a>
+          </div>
+        </div>
+        <div>
+          <h4 class="footer-title">解决方案</h4>
+          <div class="footer-links">
+            <a href="solutions-industrial.html" class="footer-link">工业智能</a>
+            <a href="solutions-research.html" class="footer-link">科研实验</a>
+            <a href="solutions-office.html" class="footer-link">智慧办公</a>
+            <a href="solutions-developer.html" class="footer-link">开发集成</a>
+          </div>
+        </div>
+        <div>
+          <h4 class="footer-title">关于</h4>
+          <div class="footer-links">
+            <a href="about.html" class="footer-link">关于我们</a>
+            <a href="contact.html" class="footer-link">联系我们</a>
+            <a href="about.html#careers" class="footer-link">加入我们</a>
+            <a href="about.html#news" class="footer-link">新闻动态</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span class="footer-copyright">© 2026 开麒智爪科技</span>
+        <div class="footer-legal">
+          <a href="privacy.html" class="footer-link">隐私政策</a>
+          <a href="terms.html" class="footer-link">使用条款</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile menu toggle
+    function toggleMenu() {
+      document.getElementById('navLinks').classList.toggle('active');
+    }
+
+    // Scene switching
+    const scenes = [
+      {
+        badge: 'Industrial AI',
+        image: 'images/server-room.jpg',
+        title: '工业智能',
+        desc: '嵌入工业机柜作为本地 AI 控制器，连接传感器与执行器，实现 7×24 小时无人值守运行。支持设备预测性维护、质量检测、工艺优化等场景。',
+        features: ['设备控制与数据采集', '本地推理，低延迟响应', 'POE 供电，简化布线'],
+        stats: [
+          { value: '<10ms', label: '响应延迟' },
+          { value: '99.9%', label: '可用性' },
+          { value: '7×24', label: '持续运行' }
+        ]
+      },
+      {
+        badge: 'Research Lab',
+        image: 'images/chip-ai.jpg',
+        title: '科研实验',
+        desc: '处理实验数据与仪器控制，确保敏感研究数据不出本地网络。支持高性能计算、数据可视化、实验流程自动化，符合学术合规要求。',
+        features: ['数据完全本地化存储', '仪器控制与数据采集', '多用户协作与权限管理'],
+        stats: [
+          { value: '100%', label: '数据本地' },
+          { value: 'TB级', label: '存储容量' },
+          { value: '等保2.0', label: '合规认证' }
+        ]
+      },
+      {
+        badge: 'Smart Office',
+        image: 'images/circuit-bw.jpg',
+        title: '智慧办公',
+        desc: '私有化 AI 助手部署，完全离线的文档处理与知识管理。支持智能客服、会议记录、文档审阅、知识库问答，杜绝数据泄露风险。',
+        features: ['完全离线，数据安全', '企业微信/钉钉集成', '本地大模型推理'],
+        stats: [
+          { value: '0', label: '云端依赖' },
+          { value: '4B', label: '模型参数' },
+          { value: '秒级', label: '响应速度' }
+        ]
+      }
+    ];
+
+    function showScene(index) {
+      const tabs = document.querySelectorAll('.scene-tab');
+      tabs.forEach((tab, i) => {
+        tab.classList.toggle('active', i === index);
+      });
+
+      const scene = scenes[index];
+      const content = document.getElementById('sceneContent');
+      content.innerHTML = `
+        <div class="scene-image">
+          <span class="scene-badge">${scene.badge}</span>
+          <img src="${scene.image}" alt="${scene.title}">
+        </div>
+        <div class="scene-info">
+          <h3 class="scene-title">${scene.title}</h3>
+          <p class="body-text-sm scene-desc">${scene.desc}</p>
+          <div class="scene-features">
+            ${scene.features.map(f => `<span class="scene-feature">${f}</span>`).join('')}
+          </div>
+          <div class="scene-stats">
+            ${scene.stats.map(s => `
+              <div>
+                <div class="scene-stat-value">${s.value}</div>
+                <div class="scene-stat-label">${s.label}</div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+    }
+
+    // Form submission
+    function handleSubmit(e) {
+      e.preventDefault();
+      const form = document.getElementById('ctaForm');
+      form.innerHTML = `
+        <div class="cta-success">
+          <div class="cta-success-title">提交成功</div>
+          <p class="body-text-sm">感谢您的关注！我们将在量产开放时第一时间通知您。</p>
+        </div>
+      `;
+    }
+
+    // Scroll animations
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.pillar-card, .arch-layer').forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(20px)';
+      el.style.transition = 'all 0.6s ease';
+      observer.observe(el);
+    });
+  </script>
+</body>
+</html>

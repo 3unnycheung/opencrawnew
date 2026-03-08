@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>加入我们 - 开麒智爪 Opencraw</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Noto+Serif+SC:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #141414;
+            --bg-tertiary: #1a1a1a;
+            --accent-red: #dc2626;
+            --accent-red-dark: #991b1b;
+            --text-primary: #f5f5f5;
+            --text-secondary: #a3a3a3;
+            --text-muted: #525252;
+            --border-color: #262626;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Space Grotesk', 'Noto Serif SC', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 70px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+        }
+
+        .logo img {
+            width: 40px;
+            height: 40px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-brand {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            letter-spacing: -0.02em;
+        }
+
+        .logo-sub {
+            font-size: 0.7rem;
+            color: var(--accent-red);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+        }
+
+        .nav-menu a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .nav-menu a:hover,
+        .nav-menu a.active {
+            color: var(--text-primary);
+        }
+
+        .nav-menu a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--accent-red);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 120px 2rem 80px;
+            position: relative;
+            background: var(--bg-primary);
+        }
+
+        .hero-grid {
+            position: absolute;
+            inset: 0;
+            background-image: 
+                linear-gradient(rgba(220, 38, 38, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(220, 38, 38, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+        }
+
+        .hero-content {
+            text-align: center;
+            max-width: 900px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-label {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: rgba(220, 38, 38, 0.1);
+            border: 1px solid var(--accent-red);
+            color: var(--accent-red);
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-bottom: 2rem;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.03em;
+        }
+
+        .hero h1 span {
+            color: var(--accent-red);
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Benefits Section */
+        .benefits-section {
+            padding: 100px 2rem;
+            background: var(--bg-secondary);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .section-header p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+        }
+
+        .benefit-card {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            padding: 2.5rem;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .benefit-card:hover {
+            border-color: var(--accent-red);
+        }
+
+        .benefit-icon {
+            width: 64px;
+            height: 64px;
+            background: rgba(220, 38, 38, 0.1);
+            border: 1px solid var(--accent-red);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.75rem;
+            margin: 0 auto 1.5rem;
+        }
+
+        .benefit-card h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+
+        .benefit-card p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Jobs Section */
+        .jobs-section {
+            padding: 100px 2rem;
+            background: var(--bg-primary);
+        }
+
+        .jobs-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .job-card {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 2rem;
+            align-items: center;
+            transition: all 0.3s;
+        }
+
+        .job-card:hover {
+            border-color: var(--accent-red);
+        }
+
+        .job-info h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .job-meta {
+            display: flex;
+            gap: 1.5rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .job-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .job-tags {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .job-tag {
+            padding: 0.25rem 0.75rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            text-decoration: none;
+            transition: all 0.3s;
+            cursor: pointer;
+            border: none;
+            white-space: nowrap;
+        }
+
+        .btn-primary {
+            background: var(--accent-red);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-red-dark);
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 100px 2rem;
+            background: var(--bg-secondary);
+            position: relative;
+        }
+
+        .cta-grid {
+            position: absolute;
+            inset: 0;
+            background-image: 
+                linear-gradient(rgba(220, 38, 38, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(220, 38, 38, 0.02) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+        }
+
+        .cta-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-content h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .cta-content p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border-color);
+            padding: 60px 2rem 30px;
+        }
+
+        .footer-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr repeat(4, 1fr);
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-brand {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .footer-brand img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+
+        .footer-brand h4 {
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .footer-brand p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .footer-links h5 {
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-red);
+        }
+
+        .footer-bottom {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-bottom p {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        .footer-legal {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .footer-legal a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: color 0.3s;
+        }
+
+        .footer-legal a:hover {
+            color: var(--accent-red);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .benefits-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .job-card {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+
+            .benefits-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <img src="images/logo-crow.jpg" alt="开麒智爪">
+                <div class="logo-text">
+                    <span class="logo-brand">开麒智爪</span>
+                    <span class="logo-sub">Opencraw</span>
+                </div>
+            </a>
+            <ul class="nav-menu">
+                <li><a href="index.html">首页</a></li>
+                <li><a href="product.html">产品</a></li>
+                <li><a href="solutions.html">解决方案</a></li>
+                <li><a href="specs.html">技术规格</a></li>
+                <li><a href="about.html">关于我们</a></li>
+                <li><a href="contact.html">联系我们</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-grid"></div>
+        <div class="hero-content">
+            <span class="hero-label">加入我们</span>
+            <h1>与我们一起<br><span>定义未来</span></h1>
+            <p>开麒智爪正在寻找热爱技术、追求卓越的伙伴，共同打造国产自主可控的边缘智能底座</p>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section class="benefits-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>为什么选择我们</h2>
+                <p>在开麒智爪，你将获得</p>
+            </div>
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <div class="benefit-icon">💰</div>
+                    <h3>有竞争力的薪酬</h3>
+                    <p>行业领先的薪资水平，年终奖金，股权激励</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">🏥</div>
+                    <h3>完善的福利</h3>
+                    <p>五险一金，补充医疗保险，年度体检</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">📚</div>
+                    <h3>持续成长</h3>
+                    <p>技术培训，行业会议，图书补贴</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">⚖️</div>
+                    <h3>工作生活平衡</h3>
+                    <p>弹性工作制，带薪年假，远程办公</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Jobs Section -->
+    <section class="jobs-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>热招职位</h2>
+                <p>寻找与你匹配的岗位</p>
+            </div>
+            <div class="jobs-list">
+                <div class="job-card">
+                    <div class="job-info">
+                        <h3>高级AI算法工程师</h3>
+                        <div class="job-meta">
+                            <span>📍 深圳</span>
+                            <span>💼 全职</span>
+                            <span>💰 30-50K</span>
+                        </div>
+                        <div class="job-tags">
+                            <span class="job-tag">深度学习</span>
+                            <span class="job-tag">模型优化</span>
+                            <span class="job-tag">Python</span>
+                        </div>
+                    </div>
+                    <a href="contact.html" class="btn btn-primary">申请职位 →</a>
+                </div>
+
+                <div class="job-card">
+                    <div class="job-info">
+                        <h3>嵌入式系统工程师</h3>
+                        <div class="job-meta">
+                            <span>📍 深圳</span>
+                            <span>💼 全职</span>
+                            <span>💰 25-40K</span>
+                        </div>
+                        <div class="job-tags">
+                            <span class="job-tag">Linux</span>
+                            <span class="job-tag">ARM</span>
+                            <span class="job-tag">驱动开发</span>
+                        </div>
+                    </div>
+                    <a href="contact.html" class="btn btn-primary">申请职位 →</a>
+                </div>
+
+                <div class="job-card">
+                    <div class="job-info">
+                        <h3>前端开发工程师</h3>
+                        <div class="job-meta">
+                            <span>📍 深圳</span>
+                            <span>💼 全职</span>
+                            <span>💰 20-35K</span>
+                        </div>
+                        <div class="job-tags">
+                            <span class="job-tag">React</span>
+                            <span class="job-tag">TypeScript</span>
+                            <span class="job-tag">UI/UX</span>
+                        </div>
+                    </div>
+                    <a href="contact.html" class="btn btn-primary">申请职位 →</a>
+                </div>
+
+                <div class="job-card">
+                    <div class="job-info">
+                        <h3>产品经理</h3>
+                        <div class="job-meta">
+                            <span>📍 深圳</span>
+                            <span>💼 全职</span>
+                            <span>💰 25-40K</span>
+                        </div>
+                        <div class="job-tags">
+                            <span class="job-tag">B端产品</span>
+                            <span class="job-tag">AI产品</span>
+                            <span class="job-tag">需求分析</span>
+                        </div>
+                    </div>
+                    <a href="contact.html" class="btn btn-primary">申请职位 →</a>
+                </div>
+
+                <div class="job-card">
+                    <div class="job-info">
+                        <h3>销售经理</h3>
+                        <div class="job-meta">
+                            <span>📍 深圳/北京/上海</span>
+                            <span>💼 全职</span>
+                            <span>💰 20-40K+提成</span>
+                        </div>
+                        <div class="job-tags">
+                            <span class="job-tag">B2B销售</span>
+                            <span class="job-tag">企业客户</span>
+                            <span class="job-tag">解决方案</span>
+                        </div>
+                    </div>
+                    <a href="contact.html" class="btn btn-primary">申请职位 →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="cta-grid"></div>
+        <div class="cta-content">
+            <h2>没有找到合适的职位？</h2>
+            <p>发送您的简历至 hr@opencraw.com，我们会保持联系</p>
+            <a href="mailto:hr@opencraw.com" class="btn btn-primary">投递简历 →</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <img src="images/logo-crow.jpg" alt="开麒智爪">
+                <h4>开麒智爪 Opencraw</h4>
+                <p>国产自主可控的边缘智能底座<br>基于openKylin系统深度定制</p>
+            </div>
+            <div class="footer-links">
+                <h5>产品</h5>
+                <ul>
+                    <li><a href="product.html">核心架构</a></li>
+                    <li><a href="product.html#model">本地模型</a></li>
+                    <li><a href="product.html#enterprise">企业集成</a></li>
+                    <li><a href="product.html#api">OpenClaw API</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h5>解决方案</h5>
+                <ul>
+                    <li><a href="solutions-industrial.html">工业智能</a></li>
+                    <li><a href="solutions-research.html">科研实验</a></li>
+                    <li><a href="solutions-office.html">智慧办公</a></li>
+                    <li><a href="solutions-developer.html">开发集成</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h5>公司</h5>
+                <ul>
+                    <li><a href="about.html">关于我们</a></li>
+                    <li><a href="news.html">新闻动态</a></li>
+                    <li><a href="join.html">加入我们</a></li>
+                    <li><a href="contact.html">联系方式</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h5>支持</h5>
+                <ul>
+                    <li><a href="specs.html">技术规格</a></li>
+                    <li><a href="privacy.html">隐私政策</a></li>
+                    <li><a href="terms.html">服务条款</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2024 开麒智爪 Opencraw. 保留所有权利。自主研发，安全可控。</p>
+            <div class="footer-legal">
+                <a href="privacy.html">隐私政策</a>
+                <a href="terms.html">服务条款</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>关于我们 - 开麒智爪 Opencraw</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Noto+Serif+SC:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #141414;
+            --bg-tertiary: #1a1a1a;
+            --accent-red: #dc2626;
+            --accent-red-dark: #991b1b;
+            --text-primary: #f5f5f5;
+            --text-secondary: #a3a3a3;
+            --text-muted: #525252;
+            --border-color: #262626;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Space Grotesk', 'Noto Serif SC', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 70px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+        }
+
+        .logo img {
+            width: 40px;
+            height: 40px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-brand {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            letter-spacing: -0.02em;
+        }
+
+        .logo-sub {
+            font-size: 0.7rem;
+            color: var(--accent-red);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+        }
+
+        .nav-menu a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .nav-menu a:hover,
+        .nav-menu a.active {
+            color: var(--text-primary);
+        }
+
+        .nav-menu a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--accent-red);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 120px 2rem 80px;
+            position: relative;
+            background: var(--bg-primary);
+        }
+
+        .hero-grid {
+            position: absolute;
+            inset: 0;
+            background-image: 
+                linear-gradient(rgba(220, 38, 38, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(220, 38, 38, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+        }
+
+        .hero-content {
+            text-align: center;
+            max-width: 900px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-label {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: rgba(220, 38, 38, 0.1);
+            border: 1px solid var(--accent-red);
+            color: var(--accent-red);
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-bottom: 2rem;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.03em;
+        }
+
+        .hero h1 span {
+            color: var(--accent-red);
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        /* Story Section */
+        .story-section {
+            padding: 100px 2rem;
+            background: var(--bg-secondary);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .story-content h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+        }
+
+        .story-content p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            line-height: 1.9;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Values Section */
+        .values-section {
+            padding: 100px 2rem;
+            background: var(--bg-primary);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .section-header p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .value-card {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            padding: 3rem 2rem;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .value-card:hover {
+            border-color: var(--accent-red);
+        }
+
+        .value-icon {
+            width: 72px;
+            height: 72px;
+            background: rgba(220, 38, 38, 0.1);
+            border: 1px solid var(--accent-red);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.75rem;
+            margin: 0 auto 1.5rem;
+        }
+
+        .value-card h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .value-card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        /* Milestones Section */
+        .milestones-section {
+            padding: 100px 2rem;
+            background: var(--bg-secondary);
+        }
+
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--border-color);
+            transform: translateX(-50%);
+        }
+
+        .timeline-item {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .timeline-item:nth-child(even) .timeline-content {
+            grid-column: 2;
+        }
+
+        .timeline-item:nth-child(even) .timeline-date {
+            grid-column: 1;
+            text-align: right;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            width: 16px;
+            height: 16px;
+            background: var(--accent-red);
+            border-radius: 50%;
+            transform: translateX(-50%);
+            border: 3px solid var(--bg-secondary);
+        }
+
+        .timeline-date {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--accent-red);
+        }
+
+        .timeline-content h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-content p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border-color);
+            padding: 60px 2rem 30px;
+        }
+
+        .footer-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr repeat(4, 1fr);
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-brand {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .footer-brand img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+
+        .footer-brand h4 {
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .footer-brand p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .footer-links h5 {
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-red);
+        }
+
+        .footer-bottom {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-bottom p {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        .footer-legal {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .footer-legal a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: color 0.3s;
+        }
+
+        .footer-legal a:hover {
+            color: var(--accent-red);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .values-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .timeline::before {
+                left: 20px;
+            }
+
+            .timeline-item {
+                grid-template-columns: 1fr;
+                padding-left: 50px;
+            }
+
+            .timeline-item:nth-child(even) .timeline-content,
+            .timeline-item:nth-child(even) .timeline-date {
+                grid-column: 1;
+                text-align: left;
+            }
+
+            .timeline-dot {
+                left: 20px;
+            }
+
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <img src="images/logo-crow.jpg" alt="开麒智爪">
+                <div class="logo-text">
+                    <span class="logo-brand">开麒智爪</span>
+                    <span class="logo-sub">Opencraw</span>
+                </div>
+            </a>
+            <ul class="nav-menu">
+                <li><a href="index.html">首页</a></li>
+                <li><a href="product.html">产品</a></li>
+                <li><a href="solutions.html">解决方案</a></li>
+                <li><a href="specs.html">技术规格</a></li>
+                <li><a href="about.html" class="active">关于我们</a></li>
+                <li><a href="contact.html">联系我们</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-grid"></div>
+        <div class="hero-content">
+            <span class="hero-label">关于我们</span>
+            <h1>自主研发<br><span>安全可控</span></h1>
+            <p>开麒智爪是一家专注于边缘智能计算的创新企业，致力于打造国产自主可控的AI基础设施，让AI技术惠及每一个组织。</p>
+        </div>
+    </section>
+
+    <!-- Story Section -->
+    <section class="story-section">
+        <div class="container">
+            <div class="story-content">
+                <h2>我们的故事</h2>
+                <p>开麒智爪成立于2023年，创始团队由来自顶尖科技企业和研究机构的技术专家组成。我们深知，在AI时代，算力基础设施的自主可控对于国家安全和产业发展具有重要意义。</p>
+                <p>基于这一信念，我们选择树莓派5作为硬件平台，搭载国产openKylin操作系统，打造出一款真正自主可控的边缘智能底座——开麒智爪Opencraw。</p>
+                <p>我们的产品已在工业制造、科研教育、企业办公等多个领域落地应用，帮助客户实现AI技术的私有化部署，保障数据安全的同时提升业务效率。</p>
+                <p>未来，我们将继续深耕边缘智能领域，推动国产AI生态建设，为中国人工智能产业的发展贡献力量。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Values Section -->
+    <section class="values-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>核心价值观</h2>
+                <p>指导我们前行的信念与原则</p>
+            </div>
+            <div class="values-grid">
+                <div class="value-card">
+                    <div class="value-icon">🔒</div>
+                    <h3>自主可控</h3>
+                    <p>坚持国产自主研发，从硬件到软件全面自主可控，保障用户数据安全与业务连续性。</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">⚡</div>
+                    <h3>技术创新</h3>
+                    <p>持续投入技术研发，紧跟AI前沿发展，为用户提供最先进、最实用的边缘智能解决方案。</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">🤝</div>
+                    <h3>客户至上</h3>
+                    <p>以客户需求为中心，提供专业的技术支持与服务，帮助客户实现业务价值最大化。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Milestones Section -->
+    <section class="milestones-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>发展历程</h2>
+                <p>开麒智爪的成长足迹</p>
+            </div>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-date">2023.06</div>
+                    <div class="timeline-content">
+                        <h3>公司成立</h3>
+                        <p>开麒智爪在深圳成立，开启边缘智能探索之旅</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-date">2023.10</div>
+                    <div class="timeline-content">
+                        <h3>首款产品发布</h3>
+                        <p>开麒智爪Opencraw V1.0正式发布，支持Qwen系列模型</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-date">2024.03</div>
+                    <div class="timeline-content">
+                        <h3>企业集成上线</h3>
+                        <p>支持企业微信、钉钉、飞书等平台集成</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-date">2024.06</div>
+                    <div class="timeline-content">
+                        <h3>OpenClaw API发布</h3>
+                        <p>开放API接口，支持开发者快速集成AI能力</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-date">2024.12</div>
+                    <div class="timeline-content">
+                        <h3>V2.0发布</h3>
+                        <p>全面升级硬件与软件，性能提升300%</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <img src="images/logo-crow.jpg" alt="开麒智爪">
+                <h4>开麒智爪 Opencraw</h4>
+                <p>国产自主可控的边缘智能底座<br>基于openKylin系统深度定制</p>
+            </div>
+            <div class="footer-links">
+                <h5>产品</h5>
+                <ul>
+                    <li><a href="product.html">核心架构</a></li>
+                    <li><a href="product.html#model">本地模型</a></li>
+                    <li><a href="product.html#enterprise">企业集成</a></li>
+                    <li><a href="product.html#api">OpenClaw API</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h5>解决方案</h5>
+                <ul>
+                    <li><a href="solutions-industrial.html">工业智能</a></li>
+                    <li><a href="solutions-research.html">科研实验</a></li>
+                    <li><a href="solutions-office.html">智慧办公</a></li>
+                    <li><a href="solutions-developer.html">开发集成</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h5>公司</h5>
+                <ul>
+                    <li><a href="about.html">关于我们</a></li>
+                    <li><a href="news.html">新闻动态</a></li>
+                    <li><a href="join.html">加入我们</a></li>
+                    <li><a href="contact.html">联系方式</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h5>支持</h5>
+                <ul>
+                    <li><a href="specs.html">技术规格</a></li>
+                    <li><a href="privacy.html">隐私政策</a></li>
+                    <li><a href="terms.html">服务条款</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2024 开麒智爪 Opencraw. 保留所有权利。自主研发，安全可控。</p>
+            <div class="footer-legal">
+                <a href="privacy.html">隐私政策</a>
+                <a href="terms.html">服务条款</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

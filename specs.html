@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>技术规格 - 开麒智爪 Opencraw</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Noto+Serif+SC:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #141414;
+            --bg-tertiary: #1a1a1a;
+            --accent-red: #dc2626;
+            --accent-red-dark: #991b1b;
+            --text-primary: #f5f5f5;
+            --text-secondary: #a3a3a3;
+            --text-muted: #525252;
+            --border-color: #262626;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Space Grotesk', 'Noto Serif SC', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 70px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+        }
+
+        .logo img {
+            width: 40px;
+            height: 40px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-brand {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            letter-spacing: -0.02em;
+        }
+
+        .logo-sub {
+            font-size: 0.7rem;
+            color: var(--accent-red);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+        }
+
+        .nav-menu a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .nav-menu a:hover,
+        .nav-menu a.active {
+            color: var(--text-primary);
+        }
+
+        .nav-menu a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--accent-red);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 50vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 120px 2rem 60px;
+            position: relative;
+            background: var(--bg-primary);
+        }
+
+        .hero-grid {
+            position: absolute;
+            inset: 0;
+            background-image: 
+                linear-gradient(rgba(220, 38, 38, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(220, 38, 38, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+        }
+
+        .hero-content {
+            text-align: center;
+            max-width: 800px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-label {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: rgba(220, 38, 38, 0.1);
+            border: 1px solid var(--accent-red);
+            color: var(--accent-red);
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-bottom: 2rem;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.03em;
+        }
+
+        .hero p {
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+        }
+
+        /* Specs Section */
+        .specs-section {
+            padding: 80px 2rem;
+            background: var(--bg-secondary);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .specs-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 4rem;
+        }
+
+        .specs-table:last-child {
+            margin-bottom: 0;
+        }
+
+        .specs-caption {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            text-align: left;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--accent-red);
+        }
+
+        .specs-table tr {
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .specs-table tr:last-child {
+            border-bottom: none;
+        }
+
+        .specs-table td {
+            padding: 1.25rem 1rem;
+        }
+
+        .specs-table td:first-child {
+            width: 35%;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .specs-table td:last-child {
+            font-weight: 600;
+        }
+
+        /* Comparison Section */
+        .comparison-section {
+            padding: 100px 2rem;
+            background: var(--bg-primary);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .section-header p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .comparison-table th {
+            padding: 1.5rem;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            font-weight: 700;
+            text-align: center;
+        }
+
+        .comparison-table th:first-child {
+            text-align: left;
+        }
+
+        .comparison-table td {
+            padding: 1.25rem 1.5rem;
+            border: 1px solid var(--border-color);
+            text-align: center;
+        }
+
+        .comparison-table td:first-child {
+            text-align: left;
+            font-weight: 500;
+        }
+
+        .comparison-table .highlight {
+            background: rgba(220, 38, 38, 0.05);
+        }
+
+        .check {
+            color: var(--accent-red);
+            font-size: 1.25rem;
+        }
+
+        .cross {
+            color: var(--text-muted);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border-color);
+            padding: 60px 2rem 30px;
+        }
+
+        .footer-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr repeat(4, 1fr);
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-brand {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .footer-brand img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+
+        .footer-brand h4 {
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .footer-brand p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .footer-links h5 {
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-red);
+        }
+
+        .footer-bottom {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-bottom p {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        .footer-legal {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .footer-legal a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: color 0.3s;
+        }
+
+        .footer-legal a:hover {
+            color: var(--accent-red);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .comparison-table {
+                font-size: 0.85rem;
+            }
+
+            .comparison-table th,
+            .comparison-table td {
+                padding: 1rem;
+            }
+
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+
+            .specs-table td:first-child {
+                width: 50%;
+            }
+
+            .comparison-table {
+                display: block;
+                overflow-x: auto;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <img src="images/logo-crow.jpg" alt="开麒智爪">
+                <div class="logo-text">
+                    <span class="logo-brand">开麒智爪</span>
+                    <span class="logo-sub">Opencraw</span>
+                </div>
+            </a>
+            <ul class="nav-menu">
+                <li><a href="index.html">首页</a></li>
+                <li><a href="product.html">产品</a></li>
+                <li><a href="solutions.html">解决方案</a></li>
+                <li><a href="specs.html" class="active">技术规格</a></li>
+                <li><a href="about.html">关于我们</a></li>
+                <li><a href="contact.html">联系我们</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-grid"></div>
+        <div class="hero-content">
+            <span class="hero-label">技术规格</span>
+            <h1>硬核参数<br>一目了然</h1>
+            <p>开麒智爪采用树莓派5硬件平台，搭载国产openKylin操作系统，提供强大的边缘AI计算能力</p>
+        </div>
+    </section>
+
+    <!-- Specs Section -->
+    <section class="specs-section">
+        <div class="container">
+            <table class="specs-table">
+                <caption class="specs-caption">硬件规格</caption>
+                <tr>
+                    <td>处理器</td>
+                    <td>Broadcom BCM2712 2.4GHz 四核 ARM Cortex-A76</td>
+                </tr>
+                <tr>
+                    <td>GPU</td>
+                    <td>VideoCore VII GPU，支持OpenGL ES 3.1、Vulkan 1.2</td>
+                </tr>
+                <tr>
+                    <td>内存</td>
+                    <td>4GB / 8GB LPDDR4X-4267 SDRAM</td>
+                </tr>
+                <tr>
+                    <td>存储</td>
+                    <td>MicroSD卡槽，支持高速SD卡扩展</td>
+                </tr>
+                <tr>
+                    <td>网络</td>
+                    <td>千兆以太网、双频Wi-Fi 6、蓝牙5.0</td>
+                </tr>
+                <tr>
+                    <td>USB接口</td>
+                    <td>2×USB 3.0、2×USB 2.0</td>
+                </tr>
+                <tr>
+                    <td>视频输出</td>
+                    <td>2×micro HDMI，支持4K60p双屏输出</td>
+                </tr>
+                <tr>
+                    <td>扩展接口</td>
+                    <td>40-pin GPIO、PCIe 2.0 x1、MIPI CSI/DSI</td>
+                </tr>
+                <tr>
+                    <td>电源</td>
+                    <td>5V/5A USB-C供电</td>
+                </tr>
+                <tr>
+                    <td>尺寸</td>
+                    <td>85.6mm × 56.5mm × 16mm</td>
+                </tr>
+            </table>
+
+            <table class="specs-table">
+                <caption class="specs-caption">软件规格</caption>
+                <tr>
+                    <td>操作系统</td>
+                    <td>openKylin 2.0（基于Linux 6.6内核）</td>
+                </tr>
+                <tr>
+                    <td>AI框架</td>
+                    <td>TensorFlow Lite、ONNX Runtime、PyTorch Mobile</td>
+                </tr>
+                <tr>
+                    <td>预置模型</td>
+                    <td>Qwen3.5-0.8B/4B、ChatGLM3-6B、CodeGeeX2</td>
+                </tr>
+                <tr>
+                    <td>API接口</td>
+                    <td>OpenClaw RESTful API（兼容OpenAI API格式）</td>
+                </tr>
+                <tr>
+                    <td>SDK支持</td>
+                    <td>Python、JavaScript、Java、Go</td>
+                </tr>
+                <tr>
+                    <td>容器支持</td>
+                    <td>Docker、Podman</td>
+                </tr>
+                <tr>
+                    <td>部署方式</td>
+                    <td>本地部署、边缘部署、混合云</td>
+                </tr>
+            </table>
+
+            <table class="specs-table">
+                <caption class="specs-caption">性能指标</caption>
+                <tr>
+                    <td>AI推理性能</td>
+                    <td>13 TOPS（INT8）</td>
+                </tr>
+                <tr>
+                    <td>模型加载速度</td>
+                    <td>Qwen3.5-4B < 3秒</td>
+                </tr>
+                <tr>
+                    <td>文本生成速度</td>
+                    <td>15-25 tokens/秒（4B模型）</td>
+                </tr>
+                <tr>
+                    <td>并发处理能力</td>
+                    <td>支持10+并发请求</td>
+                </tr>
+                <tr>
+                    <td>功耗</td>
+                    <td>典型负载 15W，峰值 25W</td>
+                </tr>
+                <tr>
+                    <td>工作温度</td>
+                    <td>0°C ~ 50°C</td>
+                </tr>
+            </table>
+        </div>
+    </section>
+
+    <!-- Comparison Section -->
+    <section class="comparison-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>产品对比</h2>
+                <p>开麒智爪 vs Mac Mini M4 vs 传统服务器</p>
+            </div>
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>对比项</th>
+                        <th class="highlight">开麒智爪</th>
+                        <th>Mac Mini M4</th>
+                        <th>传统服务器</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>价格</td>
+                        <td class="highlight">¥2,999起</td>
+                        <td>¥4,499起</td>
+                        <td>¥10,000+</td>
+                    </tr>
+                    <tr>
+                        <td>功耗</td>
+                        <td class="highlight">15W</td>
+                        <td>30W</td>
+                        <td>200W+</td>
+                    </tr>
+                    <tr>
+                        <td>体积</td>
+                        <td class="highlight">0.08L</td>
+                        <td>1.4L</td>
+                        <td>10L+</td>
+                    </tr>
+                    <tr>
+                        <td>国产化</td>
+                        <td class="highlight"><span class="check">✓</span> 完全国产</td>
+                        <td><span class="cross">✗</span> 进口</td>
+                        <td><span class="cross">✗</span> 混合</td>
+                    </tr>
+                    <tr>
+                        <td>本地部署</td>
+                        <td class="highlight"><span class="check">✓</span> 原生支持</td>
+                        <td><span class="check">✓</span> 支持</td>
+                        <td><span class="check">✓</span> 支持</td>
+                    </tr>
+                    <tr>
+                        <td>企业集成</td>
+                        <td class="highlight"><span class="check">✓</span> 内置</td>
+                        <td><span class="cross">✗</span> 需开发</td>
+                        <td><span class="cross">✗</span> 需开发</td>
+                    </tr>
+                    <tr>
+                        <td>开源系统</td>
+                        <td class="highlight"><span class="check">✓</span> openKylin</td>
+                        <td><span class="cross">✗</span> macOS</td>
+                        <td><span class="check">✓</span> 可选</td>
+                    </tr>
+                    <tr>
+                        <td>静音设计</td>
+                        <td class="highlight"><span class="check">✓</span> 无风扇</td>
+                        <td><span class="check">✓</span> 低噪音</td>
+                        <td><span class="cross">✗</span> 高噪音</td>
+                    </tr>
+                    <tr>
+                        <td>扩展性</td>
+                        <td class="highlight"><span class="check">✓</span> GPIO/PCIe</td>
+                        <td><span class="cross">✗</span> 有限</td>
+                        <td><span class="check">✓</span> 丰富</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <img src="images/logo-crow.jpg" alt="开麒智爪">
+                <h4>开麒智爪 Opencraw</h4>
+                <p>国产自主可控的边缘智能底座<br>基于openKylin系统深度定制</p>
+            </div>
+            <div class="footer-links">
+                <h5>产品</h5>
+                <ul>
+                    <li><a href="product.html">核心架构</a></li>
+                    <li><a href="product.html#model">本地模型</a></li>
+                    <li><a href="product.html#enterprise">企业集成</a></li>
+                    <li><a href="product.html#api">OpenClaw API</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h5>解决方案</h5>
+                <ul>
+                    <li><a href="solutions-industrial.html">工业智能</a></li>
+                    <li><a href="solutions-research.html">科研实验</a></li>
+                    <li><a href="solutions-office.html">智慧办公</a></li>
+                    <li><a href="solutions-developer.html">开发集成</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h5>公司</h5>
+                <ul>
+                    <li><a href="about.html">关于我们</a></li>
+                    <li><a href="news.html">新闻动态</a></li>
+                    <li><a href="join.html">加入我们</a></li>
+                    <li><a href="contact.html">联系方式</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h5>支持</h5>
+                <ul>
+                    <li><a href="specs.html">技术规格</a></li>
+                    <li><a href="privacy.html">隐私政策</a></li>
+                    <li><a href="terms.html">服务条款</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2024 开麒智爪 Opencraw. 保留所有权利。自主研发，安全可控。</p>
+            <div class="footer-legal">
+                <a href="privacy.html">隐私政策</a>
+                <a href="terms.html">服务条款</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>联系我们 - 开麒智爪 Opencraw</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Noto+Serif+SC:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #141414;
+            --bg-tertiary: #1a1a1a;
+            --accent-red: #dc2626;
+            --accent-red-dark: #991b1b;
+            --text-primary: #f5f5f5;
+            --text-secondary: #a3a3a3;
+            --text-muted: #525252;
+            --border-color: #262626;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Space Grotesk', 'Noto Serif SC', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 70px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+        }
+
+        .logo img {
+            width: 40px;
+            height: 40px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-brand {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            letter-spacing: -0.02em;
+        }
+
+        .logo-sub {
+            font-size: 0.7rem;
+            color: var(--accent-red);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+        }
+
+        .nav-menu a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .nav-menu a:hover,
+        .nav-menu a.active {
+            color: var(--text-primary);
+        }
+
+        .nav-menu a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--accent-red);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 50vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 120px 2rem 60px;
+            position: relative;
+            background: var(--bg-primary);
+        }
+
+        .hero-grid {
+            position: absolute;
+            inset: 0;
+            background-image: 
+                linear-gradient(rgba(220, 38, 38, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(220, 38, 38, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+        }
+
+        .hero-content {
+            text-align: center;
+            max-width: 800px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-label {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: rgba(220, 38, 38, 0.1);
+            border: 1px solid var(--accent-red);
+            color: var(--accent-red);
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-bottom: 2rem;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.03em;
+        }
+
+        .hero p {
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+        }
+
+        /* Contact Section */
+        .contact-section {
+            padding: 80px 2rem;
+            background: var(--bg-secondary);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+        }
+
+        /* Contact Info */
+        .contact-info h2 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+        }
+
+        .info-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .info-icon {
+            width: 48px;
+            height: 48px;
+            background: rgba(220, 38, 38, 0.1);
+            border: 1px solid var(--accent-red);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            flex-shrink: 0;
+        }
+
+        .info-content h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .info-content p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        /* Contact Form */
+        .contact-form {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            padding: 2.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 1rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            font-size: 1rem;
+            font-family: inherit;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--accent-red);
+        }
+
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            width: 100%;
+            padding: 1rem 2rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            text-decoration: none;
+            transition: all 0.3s;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary {
+            background: var(--accent-red);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-red-dark);
+        }
+
+        /* Channels Section */
+        .channels-section {
+            padding: 100px 2rem;
+            background: var(--bg-primary);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .section-header p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .channels-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .channel-card {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            padding: 2.5rem;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .channel-card:hover {
+            border-color: var(--accent-red);
+            transform: translateY(-4px);
+        }
+
+        .channel-icon {
+            width: 64px;
+            height: 64px;
+            background: rgba(220, 38, 38, 0.1);
+            border: 1px solid var(--accent-red);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.75rem;
+            margin: 0 auto 1.5rem;
+        }
+
+        .channel-card h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+
+        .channel-card p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .channel-link {
+            color: var(--accent-red);
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-decoration: none;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border-color);
+            padding: 60px 2rem 30px;
+        }
+
+        .footer-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr repeat(4, 1fr);
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-brand {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .footer-brand img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+
+        .footer-brand h4 {
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .footer-brand p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .footer-links h5 {
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-red);
+        }
+
+        .footer-bottom {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-bottom p {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        .footer-legal {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .footer-legal a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: color 0.3s;
+        }
+
+        .footer-legal a:hover {
+            color: var(--accent-red);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .channels-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <img src="images/logo-crow.jpg" alt="开麒智爪">
+                <div class="logo-text">
+                    <span class="logo-brand">开麒智爪</span>
+                    <span class="logo-sub">Opencraw</span>
+                </div>
+            </a>
+            <ul class="nav-menu">
+                <li><a href="index.html">首页</a></li>
+                <li><a href="product.html">产品</a></li>
+                <li><a href="solutions.html">解决方案</a></li>
+                <li><a href="specs.html">技术规格</a></li>
+                <li><a href="about.html">关于我们</a></li>
+                <li><a href="contact.html" class="active">联系我们</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-grid"></div>
+        <div class="hero-content">
+            <span class="hero-label">联系我们</span>
+            <h1>期待与您<br>合作</h1>
+            <p>无论您有任何问题或需求，我们的团队随时准备为您提供帮助</p>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section">
+        <div class="container">
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <h2>联系方式</h2>
+                    <div class="info-list">
+                        <div class="info-item">
+                            <div class="info-icon">📍</div>
+                            <div class="info-content">
+                                <h4>公司地址</h4>
+                                <p>深圳市南山区科技园南区<br>开麒智爪大厦 18层</p>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-icon">📧</div>
+                            <div class="info-content">
+                                <h4>电子邮箱</h4>
+                                <p>contact@opencraw.com<br>support@opencraw.com</p>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-icon">📞</div>
+                            <div class="info-content">
+                                <h4>联系电话</h4>
+                                <p>400-888-8888<br>+86 755 8888 8888</p>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-icon">🕐</div>
+                            <div class="info-content">
+                                <h4>工作时间</h4>
+                                <p>周一至周五 9:00 - 18:00<br>周末及节假日休息</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="contact-form">
+                    <form>
+                        <div class="form-group">
+                            <label for="name">姓名</label>
+                            <input type="text" id="name" name="name" placeholder="请输入您的姓名" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">邮箱</label>
+                            <input type="email" id="email" name="email" placeholder="请输入您的邮箱" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="company">公司</label>
+                            <input type="text" id="company" name="company" placeholder="请输入您的公司名称">
+                        </div>
+                        <div class="form-group">
+                            <label for="type">咨询类型</label>
+                            <select id="type" name="type" required>
+                                <option value="">请选择咨询类型</option>
+                                <option value="product">产品咨询</option>
+                                <option value="solution">解决方案</option>
+                                <option value="cooperation">商务合作</option>
+                                <option value="support">技术支持</option>
+                                <option value="other">其他</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">留言内容</label>
+                            <textarea id="message" name="message" placeholder="请详细描述您的需求..." required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">提交咨询 →</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Channels Section -->
+    <section class="channels-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>更多联系渠道</h2>
+                <p>选择最适合您的方式与我们取得联系</p>
+            </div>
+            <div class="channels-grid">
+                <div class="channel-card">
+                    <div class="channel-icon">💬</div>
+                    <h3>在线客服</h3>
+                    <p>工作日 9:00-18:00<br>实时解答您的问题</p>
+                    <a href="#" class="channel-link">立即咨询 →</a>
+                </div>
+                <div class="channel-card">
+                    <div class="channel-icon">👥</div>
+                    <h3>技术社区</h3>
+                    <p>加入开发者社区<br>与同行交流经验</p>
+                    <a href="#" class="channel-link">加入社区 →</a>
+                </div>
+                <div class="channel-card">
+                    <div class="channel-icon">📱</div>
+                    <h3>微信公众号</h3>
+                    <p>扫码关注公众号<br>获取最新动态</p>
+                    <a href="#" class="channel-link">扫码关注 →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <img src="images/logo-crow.jpg" alt="开麒智爪">
+                <h4>开麒智爪 Opencraw</h4>
+                <p>国产自主可控的边缘智能底座<br>基于openKylin系统深度定制</p>
+            </div>
+            <div class="footer-links">
+                <h5>产品</h5>
+                <ul>
+                    <li><a href="product.html">核心架构</a></li>
+                    <li><a href="product.html#model">本地模型</a></li>
+                    <li><a href="product.html#enterprise">企业集成</a></li>
+                    <li><a href="product.html#api">OpenClaw API</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h5>解决方案</h5>
+                <ul>
+                    <li><a href="solutions-industrial.html">工业智能</a></li>
+                    <li><a href="solutions-research.html">科研实验</a></li>
+                    <li><a href="solutions-office.html">智慧办公</a></li>
+                    <li><a href="solutions-developer.html">开发集成</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h5>公司</h5>
+                <ul>
+                    <li><a href="about.html">关于我们</a></li>
+                    <li><a href="news.html">新闻动态</a></li>
+                    <li><a href="join.html">加入我们</a></li>
+                    <li><a href="contact.html">联系方式</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h5>支持</h5>
+                <ul>
+                    <li><a href="specs.html">技术规格</a></li>
+                    <li><a href="privacy.html">隐私政策</a></li>
+                    <li><a href="terms.html">服务条款</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2024 开麒智爪 Opencraw. 保留所有权利。自主研发，安全可控。</p>
+            <div class="footer-legal">
+                <a href="privacy.html">隐私政策</a>
+                <a href="terms.html">服务条款</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

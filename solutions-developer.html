@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>开发集成解决方案 - 开麒智爪 Opencraw</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Noto+Serif+SC:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #141414;
+            --bg-tertiary: #1a1a1a;
+            --accent-red: #dc2626;
+            --accent-red-dark: #991b1b;
+            --text-primary: #f5f5f5;
+            --text-secondary: #a3a3a3;
+            --text-muted: #525252;
+            --border-color: #262626;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Space Grotesk', 'Noto Serif SC', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 70px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+        }
+
+        .logo img {
+            width: 40px;
+            height: 40px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-brand {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            letter-spacing: -0.02em;
+        }
+
+        .logo-sub {
+            font-size: 0.7rem;
+            color: var(--accent-red);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+        }
+
+        .nav-menu a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .nav-menu a:hover,
+        .nav-menu a.active {
+            color: var(--text-primary);
+        }
+
+        .nav-menu a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--accent-red);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 70vh;
+            display: flex;
+            align-items: center;
+            padding: 120px 2rem 80px;
+            position: relative;
+            background: var(--bg-primary);
+        }
+
+        .hero-grid {
+            position: absolute;
+            inset: 0;
+            background-image: 
+                linear-gradient(rgba(220, 38, 38, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(220, 38, 38, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+        }
+
+        .hero-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-content {
+            max-width: 600px;
+        }
+
+        .hero-label {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: rgba(220, 38, 38, 0.1);
+            border: 1px solid var(--accent-red);
+            color: var(--accent-red);
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-bottom: 2rem;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.03em;
+        }
+
+        .hero h1 span {
+            color: var(--accent-red);
+        }
+
+        .hero p {
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        .hero-image {
+            position: relative;
+        }
+
+        .hero-image img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border: 1px solid var(--border-color);
+        }
+
+        .hero-image::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: -20px;
+            right: 20px;
+            bottom: -20px;
+            border: 2px solid var(--accent-red);
+            z-index: -1;
+        }
+
+        /* API Section */
+        .api-section {
+            padding: 100px 2rem;
+            background: var(--bg-secondary);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .section-header p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .api-showcase {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: start;
+        }
+
+        .api-info h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .api-info p {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        .api-features {
+            list-style: none;
+        }
+
+        .api-features li {
+            padding: 1rem;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .api-features li::before {
+            content: '>';
+            color: var(--accent-red);
+            font-weight: bold;
+        }
+
+        .code-block {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 0;
+            overflow: hidden;
+        }
+
+        .code-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .code-lang {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        .code-copy {
+            font-size: 0.75rem;
+            color: var(--accent-red);
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+
+        .code-content {
+            padding: 1.5rem;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            line-height: 1.6;
+            overflow-x: auto;
+            color: var(--text-secondary);
+        }
+
+        .code-keyword { color: var(--accent-red); }
+        .code-string { color: #22c55e; }
+        .code-comment { color: var(--text-muted); }
+
+        /* Tools Section */
+        .tools-section {
+            padding: 100px 2rem;
+            background: var(--bg-primary);
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+        }
+
+        .tool-card {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .tool-card:hover {
+            border-color: var(--accent-red);
+            transform: translateY(-4px);
+        }
+
+        .tool-icon {
+            width: 64px;
+            height: 64px;
+            background: rgba(220, 38, 38, 0.1);
+            border: 1px solid var(--accent-red);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.75rem;
+            margin: 0 auto 1.5rem;
+        }
+
+        .tool-card h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .tool-card p {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+        }
+
+        /* Workflow Section */
+        .workflow-section {
+            padding: 100px 2rem;
+            background: var(--bg-secondary);
+        }
+
+        .workflow-steps {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            position: relative;
+        }
+
+        .workflow-steps::before {
+            content: '';
+            position: absolute;
+            top: 40px;
+            left: 12.5%;
+            right: 12.5%;
+            height: 2px;
+            background: var(--border-color);
+            z-index: 0;
+        }
+
+        .workflow-step {
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .step-number {
+            width: 80px;
+            height: 80px;
+            background: var(--bg-tertiary);
+            border: 2px solid var(--accent-red);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--accent-red);
+            margin: 0 auto 1.5rem;
+        }
+
+        .step-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+
+        .step-desc {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        /* SDK Section */
+        .sdk-section {
+            padding: 100px 2rem;
+            background: var(--bg-primary);
+        }
+
+        .sdk-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .sdk-card {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            padding: 2.5rem;
+            transition: all 0.3s;
+        }
+
+        .sdk-card:hover {
+            border-color: var(--accent-red);
+        }
+
+        .sdk-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .sdk-icon {
+            width: 48px;
+            height: 48px;
+            background: rgba(220, 38, 38, 0.1);
+            border: 1px solid var(--accent-red);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+        }
+
+        .sdk-name {
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .sdk-desc {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+        }
+
+        .sdk-install {
+            padding: 0.75rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            font-family: 'Courier New', monospace;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 100px 2rem;
+            background: var(--bg-secondary);
+            position: relative;
+        }
+
+        .cta-grid {
+            position: absolute;
+            inset: 0;
+            background-image: 
+                linear-gradient(rgba(220, 38, 38, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(220, 38, 38, 0.02) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+        }
+
+        .cta-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-content h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .cta-content p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2.5rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            text-decoration: none;
+            transition: all 0.3s;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary {
+            background: var(--accent-red);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-red-dark);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border-color);
+            padding: 60px 2rem 30px;
+        }
+
+        .footer-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr repeat(4, 1fr);
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-brand {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .footer-brand img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+
+        .footer-brand h4 {
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .footer-brand p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .footer-links h5 {
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-red);
+        }
+
+        .footer-bottom {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-bottom p {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        .footer-legal {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .footer-legal a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: color 0.3s;
+        }
+
+        .footer-legal a:hover {
+            color: var(--accent-red);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero-container {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .hero-content {
+                max-width: 100%;
+            }
+
+            .hero-image {
+                order: -1;
+            }
+
+            .api-showcase {
+                grid-template-columns: 1fr;
+            }
+
+            .tools-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .workflow-steps {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .workflow-steps::before {
+                display: none;
+            }
+
+            .sdk-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+
+            .tools-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .workflow-steps {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <img src="images/logo-crow.jpg" alt="开麒智爪">
+                <div class="logo-text">
+                    <span class="logo-brand">开麒智爪</span>
+                    <span class="logo-sub">Opencraw</span>
+                </div>
+            </a>
+            <ul class="nav-menu">
+                <li><a href="index.html">首页</a></li>
+                <li><a href="product.html">产品</a></li>
+                <li><a href="solutions.html" class="active">解决方案</a></li>
+                <li><a href="specs.html">技术规格</a></li>
+                <li><a href="about.html">关于我们</a></li>
+                <li><a href="contact.html">联系我们</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-grid"></div>
+        <div class="hero-container">
+            <div class="hero-content">
+                <span class="hero-label">开发集成</span>
+                <h1>开发者<br><span>AI工具链</span></h1>
+                <p>为开发者提供完整的AI开发工具链，支持OpenClaw API、模型微调、应用部署等全流程开发需求，让AI应用开发更简单。</p>
+                <a href="contact.html" class="btn btn-primary">查看文档 →</a>
+            </div>
+            <div class="hero-image">
+                <img src="images/circuit-board.jpg" alt="开发集成">
+            </div>
+        </div>
+    </section>
+
+    <!-- API Section -->
+    <section class="api-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>OpenClaw API</h2>
+                <p>简洁强大的API接口，快速集成AI能力到您的应用</p>
+            </div>
+            <div class="api-showcase">
+                <div class="api-info">
+                    <h3>RESTful API设计</h3>
+                    <p>OpenClaw API采用标准的RESTful设计，支持HTTP/HTTPS协议，提供完善的SDK和文档，让您可以在几分钟内完成集成。</p>
+                    <ul class="api-features">
+                        <li>兼容OpenAI API格式</li>
+                        <li>支持流式响应</li>
+                        <li>多模型切换</li>
+                        <li>自定义参数配置</li>
+                        <li>详细的错误处理</li>
+                    </ul>
+                </div>
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-lang">Python</span>
+                        <button class="code-copy">复制</button>
+                    </div>
+                    <div class="code-content">
+<span class="code-keyword">import</span> requests
+
+<span class="code-comment"># 调用OpenClaw API</span>
+response = requests.post(
+    <span class="code-string">"http://localhost:8000/v1/chat/completions"</span>,
+    headers={<span class="code-string">"Authorization"</span>: <span class="code-string">"Bearer YOUR_API_KEY"</span>},
+    json={
+        <span class="code-string">"model"</span>: <span class="code-string">"qwen3.5-4b"</span>,
+        <span class="code-string">"messages"</span>: [
+            {<span class="code-string">"role"</span>: <span class="code-string">"user"</span>, <span class="code-string">"content"</span>: <span class="code-string">"你好"</span>}
+        ],
+        <span class="code-string">"stream"</span>: <span class="code-keyword">True</span>
+    }
+)
+
+<span class="code-keyword">for</span> chunk <span class="code-keyword">in</span> response.iter_lines():
+    <span class="code-keyword">print</span>(chunk.decode(<span class="code-string">"utf-8"</span>))</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tools Section -->
+    <section class="tools-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>开发工具链</h2>
+                <p>完整的AI开发工具集，覆盖开发全流程</p>
+            </div>
+            <div class="tools-grid">
+                <div class="tool-card">
+                    <div class="tool-icon">🐳</div>
+                    <h3>Docker部署</h3>
+                    <p>一键Docker部署，快速搭建开发环境</p>
+                </div>
+                <div class="tool-card">
+                    <div class="tool-icon">⚡</div>
+                    <h3>模型量化</h3>
+                    <p>支持INT8/INT4量化，降低显存占用</p>
+                </div>
+                <div class="tool-card">
+                    <div class="tool-icon">🔧</div>
+                    <h3>LoRA微调</h3>
+                    <p>低资源消耗的模型微调方案</p>
+                </div>
+                <div class="tool-card">
+                    <div class="tool-icon">📊</div>
+                    <h3>性能监控</h3>
+                    <p>实时监控模型性能与资源使用</p>
+                </div>
+                <div class="tool-card">
+                    <div class="tool-icon">🧪</div>
+                    <h3>模型评测</h3>
+                    <p>内置评测工具，量化模型效果</p>
+                </div>
+                <div class="tool-card">
+                    <div class="tool-icon">🚀</div>
+                    <h3>CI/CD集成</h3>
+                    <p>支持GitHub Actions等CI/CD工具</p>
+                </div>
+                <div class="tool-card">
+                    <div class="tool-icon">📦</div>
+                    <h3>模型仓库</h3>
+                    <p>模型版本管理与分发</p>
+                </div>
+                <div class="tool-card">
+                    <div class="tool-icon">🔒</div>
+                    <h3>安全加固</h3>
+                    <p>API安全认证与访问控制</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Workflow Section -->
+    <section class="workflow-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>开发流程</h2>
+                <p>从开发到部署的完整工作流</p>
+            </div>
+            <div class="workflow-steps">
+                <div class="workflow-step">
+                    <div class="step-number">1</div>
+                    <h4 class="step-title">环境搭建</h4>
+                    <p class="step-desc">使用Docker快速搭建开发环境，一键启动所有服务</p>
+                </div>
+                <div class="workflow-step">
+                    <div class="step-number">2</div>
+                    <h4 class="step-title">模型选择</h4>
+                    <p class="step-desc">根据场景选择合适的预置模型，或导入自定义模型</p>
+                </div>
+                <div class="workflow-step">
+                    <div class="step-number">3</div>
+                    <h4 class="step-title">应用开发</h4>
+                    <p class="step-desc">使用OpenClaw API开发应用，SDK支持多种语言</p>
+                </div>
+                <div class="workflow-step">
+                    <div class="step-number">4</div>
+                    <h4 class="step-title">部署上线</h4>
+                    <p class="step-desc">CI/CD自动化部署，支持灰度发布与版本回滚</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SDK Section -->
+    <section class="sdk-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>多语言SDK</h2>
+                <p>支持主流编程语言，让集成更简单</p>
+            </div>
+            <div class="sdk-grid">
+                <div class="sdk-card">
+                    <div class="sdk-header">
+                        <div class="sdk-icon">🐍</div>
+                        <span class="sdk-name">Python SDK</span>
+                    </div>
+                    <p class="sdk-desc">最完整的SDK支持，适合数据科学、机器学习、后端开发等场景。</p>
+                    <div class="sdk-install">pip install openclaw</div>
+                </div>
+                <div class="sdk-card">
+                    <div class="sdk-header">
+                        <div class="sdk-icon">📜</div>
+                        <span class="sdk-name">JavaScript SDK</span>
+                    </div>
+                    <p class="sdk-desc">支持Node.js和浏览器环境，适合前端开发、全栈应用等场景。</p>
+                    <div class="sdk-install">npm install @openclaw/sdk</div>
+                </div>
+                <div class="sdk-card">
+                    <div class="sdk-header">
+                        <div class="sdk-icon">☕</div>
+                        <span class="sdk-name">Java SDK</span>
+                    </div>
+                    <p class="sdk-desc">企业级SDK，适合Spring Boot、微服务等企业应用开发。</p>
+                    <div class="sdk-install">gradle install openclaw-java</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="cta-grid"></div>
+        <div class="cta-content">
+            <h2>开始您的AI开发之旅</h2>
+            <p>查看完整开发文档，获取API密钥，开始构建您的AI应用</p>
+            <a href="contact.html" class="btn btn-primary">获取API密钥 →</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <img src="images/logo-crow.jpg" alt="开麒智爪">
+                <h4>开麒智爪 Opencraw</h4>
+                <p>国产自主可控的边缘智能底座<br>基于openKylin系统深度定制</p>
+            </div>
+            <div class="footer-links">
+                <h5>产品</h5>
+                <ul>
+                    <li><a href="product.html">核心架构</a></li>
+                    <li><a href="product.html#model">本地模型</a></li>
+                    <li><a href="product.html#enterprise">企业集成</a></li>
+                    <li><a href="product.html#api">OpenClaw API</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h5>解决方案</h5>
+                <ul>
+                    <li><a href="solutions-industrial.html">工业智能</a></li>
+                    <li><a href="solutions-research.html">科研实验</a></li>
+                    <li><a href="solutions-office.html">智慧办公</a></li>
+                    <li><a href="solutions-developer.html">开发集成</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h5>公司</h5>
+                <ul>
+                    <li><a href="about.html">关于我们</a></li>
+                    <li><a href="news.html">新闻动态</a></li>
+                    <li><a href="join.html">加入我们</a></li>
+                    <li><a href="contact.html">联系方式</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h5>支持</h5>
+                <ul>
+                    <li><a href="specs.html">技术规格</a></li>
+                    <li><a href="privacy.html">隐私政策</a></li>
+                    <li><a href="terms.html">服务条款</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2024 开麒智爪 Opencraw. 保留所有权利。自主研发，安全可控。</p>
+            <div class="footer-legal">
+                <a href="privacy.html">隐私政策</a>
+                <a href="terms.html">服务条款</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
